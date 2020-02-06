@@ -43,7 +43,7 @@ abstract class InjectorHelper(val modules: List[Module]) extends LazyLogging {
 
 }
 
-abstract class Boot(modules: List[Module]) extends InjectorHelper(modules)  {
+abstract class Boot(modules: List[Module]) extends InjectorHelper(modules) {
   def *[T](block: => T): Unit =
     try { block } catch {
       case e: Exception =>
