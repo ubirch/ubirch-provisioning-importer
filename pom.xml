@@ -57,25 +57,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <encoding>UTF-8</encoding>
 
+        <scala.major.version>2.12</scala.major.version>
         <scala.version>2.12.8</scala.version>
         <scala.compat.version>2.12</scala.compat.version>
-
-        <ubirch-protocol.version>2.1.1</ubirch-protocol.version>
-        <ubirch-crypto.version>2.1.0</ubirch-crypto.version>
-        <scala-maven-plugin.version>3.4.2</scala-maven-plugin.version>
-        <scala.version>2.12.6</scala.version>
-        <scala.major.version>2.12</scala.major.version>
         <scalatest.version>3.0.5</scalatest.version>
-        <ubirch-decoder.version>1.0</ubirch-decoder.version>
         <scala.logging.version>3.9.0</scala.logging.version>
+
+        <guice.version>4.1.0</guice.version>
+
         <slf4j.api.version>1.7.15</slf4j.api.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <log4j-over-slf4j.version>1.7.25</log4j-over-slf4j.version>
         <jcl-over-slf4j.version>1.7.25</jcl-over-slf4j.version>
         <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
-        <simple.kafka.client.version>2.1.0</simple.kafka.client.version>
-        <commons-io.version>2.6</commons-io.version>
-        <ubirch-protocol-java.version>2.0.0</ubirch-protocol-java.version>
 
         <!-- plugins -->
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
@@ -89,6 +83,18 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>28.2-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.roundeights</groupId>
@@ -153,13 +159,7 @@
             <version>${scalatest.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- other dependencies -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
