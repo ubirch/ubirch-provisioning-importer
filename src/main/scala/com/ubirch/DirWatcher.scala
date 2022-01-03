@@ -1,14 +1,13 @@
 package com.ubirch
 
-import java.io.File
 import java.nio.file.WatchEvent.Kind
 import java.nio.file._
-
 import com.google.common.eventbus.EventBus
 import com.typesafe.scalalogging.LazyLogging
-import javax.inject._
 
-import scala.collection.JavaConverters._
+import java.io.File
+import javax.inject._
+import scala.jdk.CollectionConverters._
 
 trait DirWatcher extends Thread {
   setName("DirWatcher")
@@ -31,7 +30,7 @@ class DefaultDirWatcher @Inject() (eventBus: EventBus) extends DirWatcher with L
     this
   }
 
-  def monitor = {
+  def monitor() = {
 
     if (folder == null || watcher == null || kind == null) {
       throw new Exception("Error running monitor")
@@ -45,7 +44,7 @@ class DefaultDirWatcher @Inject() (eventBus: EventBus) extends DirWatcher with L
             val filename: Path = event.context().asInstanceOf[Path]
             if (!filename.toFile.isDirectory && !filename.toFile.isHidden) {
               logger.info("New file detected: {}", filename.getFileName.toFile.getName)
-              eventBus.post(new File(folder.toAbsolutePath + "/" + filename.getFileName.toFile))
+              eventBus.post(new File(folder.toAbsolutePath.toString + "/" + filename.getFileName.toFile.toString))
             }
           } else {
             logger.info("Received another event")
@@ -56,6 +55,6 @@ class DefaultDirWatcher @Inject() (eventBus: EventBus) extends DirWatcher with L
     }
   }
 
-  override def run(): Unit = monitor
+  override def run(): Unit = monitor()
 
 }

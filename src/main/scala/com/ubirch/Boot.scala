@@ -45,7 +45,7 @@ abstract class InjectorHelper(val modules: List[Module]) extends LazyLogging {
 
 abstract class Boot(modules: List[Module]) extends InjectorHelper(modules) {
   def *[T](block: => T): Unit =
-    try { block } catch {
+    try { val _ = block } catch {
       case e: Exception =>
         logger.error("Exiting after exception found = {}", e.getMessage)
         Thread.sleep(5000)

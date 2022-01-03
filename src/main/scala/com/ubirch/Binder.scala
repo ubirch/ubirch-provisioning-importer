@@ -9,5 +9,6 @@ class Binder extends AbstractModule {
     bind(classOf[DirLoader]).to(classOf[DefaultDirLoader])
     bind(classOf[CSVReader]).to(classOf[DefaultCSVReader])
     bind(classOf[EventBus]).toProvider(classOf[DefaultIncomingFileBus])
+    ()
   }
 }
