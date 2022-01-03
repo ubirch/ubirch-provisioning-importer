@@ -22,7 +22,7 @@ class DefaultDirWatcher @Inject() (eventBus: EventBus) extends DirWatcher with L
   private var kind: Kind[Path] = _
 
   def create(path: String, watchKind: Kind[Path] = StandardWatchEventKinds.ENTRY_CREATE) = {
-    println(path)
+    logger.info("path=" + path)
     folder = Paths.get(path)
     watcher = FileSystems.getDefault.newWatchService()
     kind = watchKind
@@ -35,22 +35,26 @@ class DefaultDirWatcher @Inject() (eventBus: EventBus) extends DirWatcher with L
     if (folder == null || watcher == null || kind == null) {
       throw new Exception("Error running monitor")
     } else {
-      var valid: Boolean = true
-      while (valid) {
-        val key = watcher.take()
-        for (event <- key.pollEvents().asScala) {
-          val watchKind = event.kind()
-          if (kind == watchKind) {
-            val filename: Path = event.context().asInstanceOf[Path]
-            if (!filename.toFile.isDirectory && !filename.toFile.isHidden) {
-              logger.info("New file detected: {}", filename.getFileName.toFile.getName)
-              eventBus.post(new File(folder.toAbsolutePath.toString + "/" + filename.getFileName.toFile.toString))
+      try {
+        var valid: Boolean = true
+        while (valid) {
+          val key = watcher.take()
+          for (event <- key.pollEvents().asScala) {
+            val watchKind = event.kind()
+            if (kind == watchKind) {
+              val filename: Path = event.context().asInstanceOf[Path]
+              if (!filename.toFile.isDirectory && !filename.toFile.isHidden) {
+                logger.info("New file detected: {}", filename.getFileName.toFile.getName)
+                eventBus.post(new File(folder.toAbsolutePath.toString + "/" + filename.getFileName.toFile.toString))
+              }
+            } else {
+              logger.info("Received another event")
             }
-          } else {
-            logger.info("Received another event")
           }
+          valid = key.reset()
         }
-        valid = key.reset()
+      } finally {
+        if (watcher != null) watcher.close()
       }
     }
   }

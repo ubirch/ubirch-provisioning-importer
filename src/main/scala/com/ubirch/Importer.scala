@@ -11,7 +11,10 @@ object Importer {
 
   def main(args: Array[String]): Unit = {
 
-    val dir = "/home/carlos/sources/ubirch/ubirch-provisioning-importer/hola/"
+    val dir = args.toList match {
+      case List(d) => d
+      case _ => throw new IllegalArgumentException("No folder to check. Please a folder to check.")
+    }
 
     val dirLoader = factory.get[DirLoader]
     val dirWatcher = factory.get[DirWatcher]

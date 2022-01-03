@@ -29,7 +29,7 @@ class DefaultCSVReader extends CSVReader with LazyLogging {
     work.put(file)
   }
 
-  def process() = {
+  def process(): Unit = {
 
     val file = work.poll()
 
