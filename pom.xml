@@ -58,7 +58,7 @@
         <encoding>UTF-8</encoding>
 
         <scala.major.version>2.13</scala.major.version>
-        <scala.version>2.13.7</scala.version>
+        <scala.version>2.13.9</scala.version>
         <scalatest.version>3.2.10</scalatest.version>
         <scala.logging.version>3.9.4</scala.logging.version>
         <scala.config>1.4.1</scala.config>
